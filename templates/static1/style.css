@@ -1,0 +1,18 @@
+p {
+    font-size : 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color : white
+
+}
+h1 {
+    text-align : center;
+}
+div {
+    height : 300px;
+    width : 1530px;
+    background-color: #305252;
+    padding-top: 10px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}

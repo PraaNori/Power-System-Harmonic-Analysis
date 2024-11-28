@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accurate Monitoring of Harmonics/Interharmonics in Modern power System with Low Cost Hardware
+    </title>
+    <style>
+        /* General page styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #b5d5d4;
+            color: #305252;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+    
+        h1 {
+            color: #fff;
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            background-color: #68b0ab;
+            padding: 15px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            /*justify-content: center; /* Centers the image and text horizontally on the page */
+            gap: 50px; /* Space between the image and text */
+        }
+
+        .header-image {
+            width: 150px; /* Set image width */
+            height: auto; /* Maintain aspect ratio */
+        }
+    
+        /* Form styling */
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+    
+        label {
+            font-weight: bold;
+            color: #305252;
+        }
+    
+        input[type="file"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    
+        button {
+            background-color: #305252;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #68b0ab;
+        }
+    
+        /* Plot styling */
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .plot-container {
+            flex: 1;
+            text-align: center;
+        }
+        .plot {
+            flex: 1 1 30%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+    
+        .plot h2 {
+            color: #305252;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+    
+        .plot img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+    
+        /* Additional styling for feedback message */
+        p {
+            color:  #304646;
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        #intro > p1, #intro > p2 {
+            display: block; /* Ensures block-level behavior for consistent styling */
+            color: rgb(36, 45, 106); /* Subheading color */
+            font-weight: normal; /* Makes subheadings bold for clarity */
+            margin-bottom: 5px; /* Adds spacing below each subheading */
+        }
+
+        /* Styling for content inside subheadings */
+        #intro > p1 span, #intro > p2 span {
+            color: rgb(23, 24, 28); /* Color for the content text */
+            text-decoration: underline; /* Adds underline to subheadings */
+
+            font-weight: bolder; /* Regular weight for content */
+        }
+        #intro {
+            font-size: 1.4em;
+        }
+            /* Styling for group names */
+            .group {
+            margin-top: 30px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 1.2em;
+        }
+        .group ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .group li {
+            margin: 5px 0;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="header-container">
+    <img src="/static/images/logo2.png" alt="Logo" class="header-image">
+    <h1>Power System Harmonic Analysis
+    </h1>
+    <img src="/static/images/logo1.png" alt="Logo" class="header-image">
+    </div>
+    <div id = "intro">
+    <p id = "intro">Accurate Monitoring of Harmonics/Interharmonics in Modern Power System with Low Cost Hardware</p>
+    <p1><span>Project Number:</span> SERB-PDF/2022/002550</p1>
+        <p2><span>Funding Agency:</span> Science and Engineering Research Board<br> <br></p2>
+    </div>
+    
+    <!-- Form to upload CSV file and input frequency -->
+    <form action="/" method="post" enctype="multipart/form-data">
+        <label for="file">Upload CSV file:</label>
+        <input type="file" id="file" name="file" accept=".csv" required>
+        
+        <label for="frequency">Sampling Frequency (Hz):</label>
+        <input type="number" id="frequency" name="frequency" step="0.01" required>
+        
+        <button type="submit">Analyze Signal</button>
+    </form>
+    
+    <p>{{ plot_type }}</p>
+    <div class="container">
+    <div class="plot">
+        <h2>Poincare Plot</h2>
+        <img src="{{ xp_yp_url }}" alt="xp vs yp Plot">
+        <p class="description">
+            This plot shows the relationship between downsampled voltage (`xp`) and its derivative (`yp`). It helps identify interharmonics through visual patterns.
+        </p>
+    </div>
+    
+    <div class="plot">
+        <h2>RD_RDI Plot</h2>
+        <img src="{{ rd_rdi_url}}" alt="no rd vs rdi plot">
+        <p class="description">
+            The RD_RDI plot represents the Rank Difference (RD) on the y-axis and the Rank Index (RDI) on the x-axis. Peaks in the RD values indicate dominant spectral components in the signal.
+        </p>
+    </div>
+    <div class="plot">
+        <h2>Frequency Plot</h2>
+        <img src="{{ plot_url }}" alt="Frequency Plot">
+        <p class="description">
+            This bar chart shows the frequencies (x-axis) and their respective amplitudes (y-axis). It visualizes the signal's spectral components, indicating harmonic and interharmonic contributions.
+        </p>
+    </div>
+        
+    </div>
+    <div class="group">
+        <h3>UI Designed by:</h3>
+        <ul>
+            <li>VamsiKrishna Reddy</li>
+            <li>Jandhyam Sai Sriya</li>
+            <li>Pradeepika Nori</li>
+            <li>Sravanth Naik</li>
+        </ul>
+    </div>
+</body>
+</html>
