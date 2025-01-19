@@ -30,7 +30,7 @@ Power System Harmonic Analysis is a Python-based web application built using Fla
 
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/PraaNori/Power-System-Harmonic-Analysis
    cd Power System Harmonic Analysis
    ```
 
